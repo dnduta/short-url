@@ -33,6 +33,9 @@ public class ShortenUrl {
     public Response getUrl(@PathParam("hash") String hash) throws Exception
     {
         ShortUrl url = urlShortener.getUrl(hash);
+        if(url == null)
+            throw new NotFoundException("The link does not exist!");
+
         return Response.temporaryRedirect( new URI(url.getOriginal())).build();
     }
 
